@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Mero11</string>
+    <string name="facebook_app_id">536364390718494</string>
+    <string name="fb_login_protocol_scheme">fb536364390718494</string>
+</resources>

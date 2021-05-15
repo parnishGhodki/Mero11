@@ -1,0 +1,65 @@
+name: cricketfantasy
+description: A new Flutter application.
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons:
+  intl:
+  http:   
+  flutter_bloc:
+  url_launcher:
+  flutter_launcher_icons:
+  shared_preferences:
+  flutter_icons:
+  line_icons:
+  share:
+  uuid:
+  sticky_headers:
+  percent_indicator:
+  cached_network_image:
+  page_indicator:
+  country_pickers:
+  font_awesome_flutter:
+  bottom_navy_bar:
+  webview_flutter:
+  firebase_auth: ^1.0.1
+  firebase_core: ^1.0.1
+  flutter_facebook_login: ^3.0.0
+  flutter_facebook_auth: ^1.0.0
+  google_sign_in: ^5.0.1
+  provider: ^5.0.0
+  selectable_container: ^1.0.1
+  
+  
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  
+
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+
+  fonts:
+    - family: Quicksand
+      fonts:
+        - asset: assets/fonts/quicksand_medium.ttf
+          style: normal
+        - asset: assets/fonts/quicksand_bold.otf
+          weight: 700
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/final_logo.png"
