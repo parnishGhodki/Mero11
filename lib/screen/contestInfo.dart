@@ -7,13 +7,27 @@ import 'package:sticky_headers/sticky_headers/widget.dart';
 
 import 'clipper/create_team.dart';
 
-class ContestInfoScreen extends StatelessWidget {
+class ContestInfoScreen extends StatefulWidget {
   final Contests contests;
   final String userid;
 
   ContestInfoScreen({this.contests, this.userid});
 
   List<String> test = ["1"];
+  bool flag = false;
+
+  @override
+  createState() => _ContestInfoScreenState();
+}
+
+class _ContestInfoScreenState extends State<ContestInfoScreen>
+    with SingleTickerProviderStateMixin {
+  TabController controller;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,11 +39,61 @@ class ContestInfoScreen extends StatelessWidget {
                   child: Container(
                       padding: EdgeInsets.all(10),
                       child: Column(children: <Widget>[
-                        getPriceList(context, contests),
+                        getPriceList(context, widget.contests),
                         SizedBox(height: 10),
                         progressBar(),
                       ])))),
-          Expanded(
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Container(
+                padding: EdgeInsets.all(8),
+                child: TextButton(
+                    style: ButtonStyle(
+                      foregroundColor:
+                          MaterialStateProperty.all<Color>(Colors.blue),
+                      overlayColor: MaterialStateProperty.resolveWith<Color>(
+                        (Set<MaterialState> states) {
+                          if (states.contains(MaterialState.hovered))
+                            return Colors.blue.withOpacity(0.04);
+                          if (states.contains(MaterialState.focused) ||
+                              states.contains(MaterialState.pressed))
+                            return Colors.blue.withOpacity(0.12);
+                          return null; // Defer to the widget's default.
+                        },
+                      ),
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        widget.flag = false;
+                      });
+                    },
+                    child: Text('PRIZE POOL'))),
+            Container(
+              padding: EdgeInsets.all(8),
+              child: TextButton(
+                  style: ButtonStyle(
+                    foregroundColor:
+                        MaterialStateProperty.all<Color>(Colors.blue),
+                    overlayColor: MaterialStateProperty.resolveWith<Color>(
+                      (Set<MaterialState> states) {
+                        if (states.contains(MaterialState.hovered))
+                          return Colors.blue.withOpacity(0.04);
+                        if (states.contains(MaterialState.focused) ||
+                            states.contains(MaterialState.pressed))
+                          return Colors.blue.withOpacity(0.12);
+                        return null; // Defer to the widget's default.
+                      },
+                    ),
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      widget.flag = true;
+                    });
+                  },
+                  child: Text('LEADERBOARD')),
+            )
+          ]),
+          !widget.flag ? Text("PRIZE POOL") : Text("LEADER BOARD"),
+          /*Expanded(
               child: ListView.builder(
                   shrinkWrap: true,
                   physics: BouncingScrollPhysics(),
@@ -56,102 +120,100 @@ class ContestInfoScreen extends StatelessWidget {
                                     ])),
                             content:
                                 Column(children: getContestsSubList(test))));
-                  }))
+                  }))*/
         ]));
   }
+}
 
-  List<Widget> getContestsSubList(List<String> test /*temp*/) {
-    var widgetList = List<Widget>();
+List<Widget> getContestsSubList(List<String> test /*temp*/) {
+  var widgetList = List<Widget>();
 
-    //for (int i = 0; i < 10; i++) {
-    /*temp*/
+  //for (int i = 0; i < 10; i++) {
+  /*temp*/
 
-    //}
+  //}
 
-    return widgetList;
-  }
+  return widgetList;
+}
 
-  progressBar() {
-    var totalTeam = int.tryParse('12');
-    var remainingTeam = int.tryParse('0');
-    var per = (((totalTeam - remainingTeam) * 100) / totalTeam);
-    return Container(
-        height: 10,
-        child: LinearGradientProgressbarView(progressbarPoint: per));
-  }
+progressBar() {
+  var totalTeam = int.tryParse('12');
+  var remainingTeam = int.tryParse('0');
+  var per = (((totalTeam - remainingTeam) * 100) / totalTeam);
+  return Container(
+      height: 10, child: LinearGradientProgressbarView(progressbarPoint: per));
+}
 
-  getPriceList(BuildContext context, Contests contests) {
-    var remainingTeam = int.tryParse('9') ?? 0;
-    return Container(
-        child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: <
-            Widget>[
-      Expanded(
-          child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-            Container(
-                child: Text('Prize Pool',
-                    style: TextStyle(color: Colors.blueAccent))),
-            SizedBox(height: 4),
-            contests.winingAmount != null
-                ? Text(contests.winingAmount,
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold))
-                : Text("NA",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold))
-          ])),
-      GestureDetector(
-          onTap: () => {},
-          child: Column(children: <Widget>[
-            Text('Winners',
-                style: TextStyle(color: Colors.yellowAccent.shade700)),
-            SizedBox(height: 4),
-            Text('1', style: TextStyle(color: Colors.blue))
-          ])),
-      Expanded(
-          child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: <Widget>[
-            Text('Entry',
-                style: TextStyle(color: Colors.green),
-                textAlign: TextAlign.end),
-            SizedBox(height: 8),
-            remainingTeam != 0
-                ? Container(
-                    height: 30,
-                    width: 70,
-                    decoration: new BoxDecoration(
-                        borderRadius: new BorderRadius.circular(4.0),
-                        boxShadow: <BoxShadow>[
-                          BoxShadow(
-                              color: Colors.green.withOpacity(0.1),
-                              offset: Offset(0, 0))
-                        ]),
-                    child: Material(
-                        color: Colors.transparent,
-                        child: InkWell(
-                            borderRadius: new BorderRadius.circular(4.0),
-                            onTap: remainingTeam != 0
-                                ? () => inviteCodeDialog(context, '200', '200')
-                                : null,
-                            child: Center(
-                                child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: <Widget>[
-                                  contests.entryFee != null
-                                      ? Text(contests.entryFee)
-                                      : Text("NA")
-                                ])))))
-                : Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[Text('00')])
-          ]))
-    ]));
-  }
+getPriceList(BuildContext context, Contests contests) {
+  var remainingTeam = int.tryParse('9') ?? 0;
+  return Container(
+      child:
+          Row(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+    Expanded(
+        child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+          Container(
+              child: Text('Prize Pool',
+                  style: TextStyle(color: Colors.blueAccent))),
+          SizedBox(height: 4),
+          contests.winingAmount != null
+              ? Text(contests.winingAmount,
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold))
+              : Text("NA",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold))
+        ])),
+    GestureDetector(
+        onTap: () => {},
+        child: Column(children: <Widget>[
+          Text('Winners',
+              style: TextStyle(color: Colors.yellowAccent.shade700)),
+          SizedBox(height: 4),
+          Text('1', style: TextStyle(color: Colors.blue))
+        ])),
+    Expanded(
+        child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: <Widget>[
+          Text('Entry',
+              style: TextStyle(color: Colors.green), textAlign: TextAlign.end),
+          SizedBox(height: 8),
+          remainingTeam != 0
+              ? Container(
+                  height: 30,
+                  width: 70,
+                  decoration: new BoxDecoration(
+                      borderRadius: new BorderRadius.circular(4.0),
+                      boxShadow: <BoxShadow>[
+                        BoxShadow(
+                            color: Colors.green.withOpacity(0.1),
+                            offset: Offset(0, 0))
+                      ]),
+                  child: Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                          borderRadius: new BorderRadius.circular(4.0),
+                          onTap: remainingTeam != 0
+                              ? () => inviteCodeDialog(context, '200', '200')
+                              : null,
+                          child: Center(
+                              child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                contests.entryFee != null
+                                    ? Text(contests.entryFee)
+                                    : Text("NA")
+                              ])))))
+              : Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[Text('00')])
+        ]))
+  ]));
+}
 
-  winnerCount() {
-    return InkWell(onTap: () {}, child: Container());
-  }
+winnerCount() {
+  return InkWell(onTap: () {}, child: Container());
 }
 
 void inviteCodeDialog(BuildContext context, String entryFee, String balance) {

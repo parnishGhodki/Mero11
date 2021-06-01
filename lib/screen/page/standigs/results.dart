@@ -15,7 +15,7 @@ class ResultsScreen extends StatelessWidget {
             shrinkWrap: true,
             itemCount: 1,
             itemBuilder: (context, index) {
-              return Text("Test");
+              return Text("");
               /*TeamPlayWidget(
                   matchStatus: 'Match status',
                   seriesName: 'Series name',

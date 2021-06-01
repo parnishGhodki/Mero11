@@ -71,7 +71,9 @@ class _TeamPreviewState extends State<TeamPreviewScreen> {
                                     widget.arList,
                                     widget.bowlList,
                                     widget.userid,
-                                    widget.matchid);
+                                    widget.matchid,
+                                    widget.captain.pid,
+                                    widget.vicecaptain.pid);
                                 if (result == true) {
                                   final status =
                                       Provider.of<User>(context, listen: false);

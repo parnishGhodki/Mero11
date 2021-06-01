@@ -1,4 +1,3 @@
-import 'package:cricketfantasy/screen/widget/slider.dart';
 import 'package:cricketfantasy/services/authenticate.dart';
 import 'package:cricketfantasy/util/hexacolor.dart';
 import 'package:cricketfantasy/util/vars.dart';
@@ -7,9 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 
 class LoginScreen extends StatefulWidget {
-  bool isLoggedIn = false;
-  FacebookAuthService facebookAuthService = FacebookAuthService();
-  GoogleAuthService googleAuthService = GoogleAuthService();
   Authentication authentication = Authentication();
   User user;
   @override
@@ -25,28 +21,49 @@ class _LoginState extends State<LoginScreen> {
           child: Container(
               child: Column(children: <Widget>[
         Container(
-            margin: EdgeInsets.only(top: 40),
-            child: Text(appName,
-                style: TextStyle(color: Colors.blue, fontSize: 30))),
-        Image(alignment: Alignment.center, image: Image.asset(appIcon).image),
-        SizedBox(height: 8),
-        /*_socialLogin(EdgeInsets.all(10), LineIcons.facebook, '#4267B2',
-            'Continue with Facebook', voidCallback: () async {
-          //widget.isLoggedIn = await widget.facebookAuthService.signIn();
-          //print(widget.isLoggedIn);
-          widget.user = await widget.authentication.signInWithFacebook();
-          print(widget.user.displayName);
-        })*/
-        _socialLogin(
-            EdgeInsets.only(top: 40, left: 10, right: 10, bottom: 10),
-            LineIcons.googlePlusSquare,
-            '#EF5350',
-            'Continue with Google', voidCallback: () async {
-          //widget.isLoggedIn = await widget.googleAuthService.signIn();
-          widget.user =
-              await widget.authentication.signInWithGoogle(context: context);
-          print(widget.user.displayName);
-        })
+            child: Image(
+              alignment: Alignment.center,
+              image: Image.asset(appIcon).image,
+            ),
+            color: Colors.teal[400]),
+        SizedBox(
+          height: 18,
+        ),
+        Container(
+          height: 40,
+          width: 250,
+          alignment: Alignment.center,
+          decoration: new BoxDecoration(
+              color: Colors.black,
+              borderRadius: new BorderRadius.circular(20.0)),
+          child: Text("Login with",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold)),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            _socialLogin(
+                EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 10),
+                LineIcons.facebook,
+                '#4267B2',
+                'Facebook', voidCallback: () async {
+              widget.user = await widget.authentication.signInWithFacebook();
+            }),
+            SizedBox(width: 4),
+            _socialLogin(
+                EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 10),
+                LineIcons.googlePlusSquare,
+                '#db3236',
+                'Google', voidCallback: () async {
+              widget.user = await widget.authentication
+                  .signInWithGoogle(context: context);
+            })
+          ],
+        ),
       ]))),
     ]));
   }
@@ -55,15 +72,15 @@ class _LoginState extends State<LoginScreen> {
           EdgeInsets edgeInsets, IconData iconData, String color, String title,
           {VoidCallback voidCallback}) =>
       Container(
+          height: 40,
+          width: 150,
           margin: edgeInsets,
-          decoration: new BoxDecoration(
-            color: Colors.white70,
-            borderRadius: new BorderRadius.circular(8.0),
-          ),
           child: Material(
-              color: Colors.transparent,
+              borderRadius: new BorderRadius.circular(20.0),
+              elevation: 2,
+              color: HexColor(color),
               child: InkWell(
-                  borderRadius: new BorderRadius.circular(8.0),
+                  borderRadius: new BorderRadius.circular(20.0),
                   onTap: () => voidCallback(),
                   child: Padding(
                       padding: EdgeInsets.only(top: 8, bottom: 8),
@@ -71,11 +88,11 @@ class _LoginState extends State<LoginScreen> {
                           child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: <Widget>[
-                            Icon(iconData, color: HexColor(color), size: 30),
+                            Icon(iconData, color: Colors.white, size: 25),
                             SizedBox(width: 4),
                             Text(title,
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                    fontSize: 16, color: HexColor(color)))
+                                    fontSize: 18, color: Colors.white))
                           ]))))));
 }

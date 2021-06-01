@@ -31,7 +31,9 @@ class CreateTeam {
       List<Data> allrounderlist,
       List<Data> bowlerlist,
       String userid,
-      String matchid) async {
+      String matchid,
+      String captain,
+      String vice_captain) async {
     final Uri uri = Uri.parse("https://mero11.com/wb/create_team");
     List<Data> allPlayersList = List();
 
@@ -54,6 +56,12 @@ class CreateTeam {
       "pid9": allPlayersList[8].pid,
       "pid10": allPlayersList[9].pid,
       "pid11": allPlayersList[10].pid,
+      "wk": [],
+      "bat": [],
+      "captain": captain,
+      "bowl": [],
+      "ar": [],
+      "voice_captain": vice_captain,
     });
 
     if (response.statusCode == 200) {

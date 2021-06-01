@@ -18,7 +18,7 @@ class fixtureResponse {
       print(response.body);
 
       matches = fixture.fromJson(responseString);
-
+      print(matches.data1.elementAt(0).team1);
       return matches.data1;
     } else {
       return null;

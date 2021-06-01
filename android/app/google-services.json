@@ -1,50 +1,34 @@
 {
   "project_info": {
-    "project_number": "411920844657",
-    "firebase_url": "https://mero11-d277f-default-rtdb.firebaseio.com",
-    "project_id": "mero11-d277f",
-    "storage_bucket": "mero11-d277f.appspot.com"
+    "project_number": "918786309252",
+    "project_id": "mero11-98965",
+    "storage_bucket": "mero11-98965.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:411920844657:android:b4718d784b37f1b78898d0",
+        "mobilesdk_app_id": "1:918786309252:android:a2d2d700c4ea0fc9f496d1",
         "android_client_info": {
-          "package_name": "com.jdkgroup.cricketfantasy"
+          "package_name": "com.example.mero11"
         }
       },
       "oauth_client": [
         {
-          "client_id": "411920844657-t5bot6opntuskqh1bcdf8na4n725i409.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.jdkgroup.cricketfantasy",
-            "certificate_hash": "b4d787282444ae3a110396d19612aa3d5b14d30b"
-          }
-        },
-        {
-          "client_id": "411920844657-trqfk9gsr4s0idsdb5usdr0u7tr184p5.apps.googleusercontent.com",
+          "client_id": "918786309252-9q1p8lpti0gs5kir542ofl0niok8kn6e.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAIiNCmj-unnow3cyhYRaq8GnLCnC--is8"
+          "current_key": "AIzaSyCmmiaHIC8OyDAtIKAVc0IfYaKBmWkRtXY"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "411920844657-trqfk9gsr4s0idsdb5usdr0u7tr184p5.apps.googleusercontent.com",
+              "client_id": "918786309252-9q1p8lpti0gs5kir542ofl0niok8kn6e.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "411920844657-n6lsp11gdvmhopnp7apv412mrga8mshm.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.jdkgroup.cricketfantasy"
-              }
             }
           ]
         }

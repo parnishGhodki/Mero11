@@ -1,18 +1,111 @@
 import 'package:cricketfantasy/model/userInfo.dart';
-import 'package:cricketfantasy/screen/page/home.dart';
-import 'package:cricketfantasy/screen/page/tab.dart';
-import 'package:cricketfantasy/util/vars.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
-import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as JSON;
 
-class FacebookAuthService {
+class UserData {
+  Future<userInfo> createUser(String name, String email, String social_type,
+      String social_id, String device_id) async {
+    final Uri uri = Uri.parse("https://mero11.com/wb/social_login");
+
+    final response = await http.post(uri, body: {
+      "name": name,
+      "email": email,
+      "social_type": social_type,
+      "social_id": social_id,
+      "device_id": device_id
+    });
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> responseString =
+          JSON.jsonDecode(response.body);
+      print(response.body);
+
+      userInfo userinfo = userInfo.fromJson(responseString);
+      print(userinfo.data.email);
+      return userinfo;
+    } else {
+      print("Unsuccessful");
+      return null;
+    }
+  }
+}
+
+class Authentication {
+  FirebaseAuth auth = FirebaseAuth.instance;
+  Future<User> signInWithGoogle({BuildContext context}) async {
+    User user;
+
+    final GoogleSignIn googleSignIn = GoogleSignIn();
+
+    final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
+
+    if (googleSignInAccount != null) {
+      final GoogleSignInAuthentication googleSignInAuthentication =
+          await googleSignInAccount.authentication;
+
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleSignInAuthentication.accessToken,
+        idToken: googleSignInAuthentication.idToken,
+      );
+
+      try {
+        final UserCredential userCredential =
+            await auth.signInWithCredential(credential);
+
+        user = userCredential.user;
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'account-exists-with-different-credential') {
+          // handle the error here
+        } else if (e.code == 'invalid-credential') {
+          // handle the error here
+        }
+      } catch (e) {
+        // handle the error here
+      }
+    }
+    //print(user.displayName);
+    return user;
+  }
+
+  Stream<User> get user {
+    return auth.authStateChanges();
+  }
+
+  Future<User> signInWithFacebook() async {
+    // Trigger the sign-in flow
+    final AccessToken result = await FacebookAuth.instance.login();
+
+    // Create a credential from the access token
+    final FacebookAuthCredential facebookAuthCredential =
+        FacebookAuthProvider.credential(result.token);
+
+    //print(facebookAuthCredential);
+    // Once signed in, return the UserCredential
+
+    UserCredential userCredential = await FirebaseAuth.instance
+        .signInWithCredential(facebookAuthCredential);
+
+    User user = userCredential.user;
+    print(user);
+
+    return user;
+  }
+
+  signOut() {
+    auth.signOut();
+  }
+}
+
+
+
+/////////////////////////////////////////// SAMPLE CODE ////////////////////////////////////////////////////////
+
+/*class FacebookAuthService {
   final facebookLogin = FacebookLogin();
 
   // sign in with mobile number
@@ -120,9 +213,8 @@ class FacebookAuthService {
     }
   }*/
 
-}
-
-class GoogleAuthService {
+}*/
+/*class GoogleAuthService {
   GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
   bool flag = false;
 
@@ -145,98 +237,27 @@ class GoogleAuthService {
   signOut() {
     _googleSignIn.signOut();
   }
-}
+}*/
 
-class UserData {
-  Future<userInfo> createUser(String name, String email, String social_type,
-      String social_id, String device_id) async {
-    final Uri uri = Uri.parse("https://mero11.com/wb/social_login");
 
-    final response = await http.post(uri, body: {
-      "name": name,
-      "email": email,
-      "social_type": social_type,
-      "social_id": social_id,
-      "device_id": device_id
-    });
 
-    if (response.statusCode == 200) {
-      final Map<String, dynamic> responseString =
-          JSON.jsonDecode(response.body);
-      print(response.body);
 
-      userInfo userinfo = userInfo.fromJson(responseString);
-      print(userinfo.data.email);
-      return userinfo;
-    } else {
-      print("Unsuccessful");
-      return null;
-    }
-  }
-}
 
-class Authentication {
-  FirebaseAuth auth = FirebaseAuth.instance;
-  Future<User> signInWithGoogle({BuildContext context}) async {
-    User user;
 
-    final GoogleSignIn googleSignIn = GoogleSignIn();
 
-    final GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
 
-    if (googleSignInAccount != null) {
-      final GoogleSignInAuthentication googleSignInAuthentication =
-          await googleSignInAccount.authentication;
 
-      final AuthCredential credential = GoogleAuthProvider.credential(
-        accessToken: googleSignInAuthentication.accessToken,
-        idToken: googleSignInAuthentication.idToken,
-      );
 
-      try {
-        final UserCredential userCredential =
-            await auth.signInWithCredential(credential);
 
-        user = userCredential.user;
-      } on FirebaseAuthException catch (e) {
-        if (e.code == 'account-exists-with-different-credential') {
-          // handle the error here
-        } else if (e.code == 'invalid-credential') {
-          // handle the error here
-        }
-      } catch (e) {
-        // handle the error here
-      }
-    }
-    //print(user.displayName);
-    return user;
-  }
 
-  Stream<User> get user {
-    return auth.authStateChanges();
-  }
 
-  Future<User> signInWithFacebook() async {
-    // Trigger the sign-in flow
-    final AccessToken result = await FacebookAuth.instance.login();
 
-    // Create a credential from the access token
-    final FacebookAuthCredential facebookAuthCredential =
-        FacebookAuthProvider.credential(result.token);
 
-    //print(facebookAuthCredential);
-    // Once signed in, return the UserCredential
 
-    UserCredential userCredential = await FirebaseAuth.instance
-        .signInWithCredential(facebookAuthCredential);
 
-    User user = userCredential.user;
-    print(user);
 
-    return user;
-  }
 
-  signOut() {
-    auth.signOut();
-  }
-}
+
+
+
+

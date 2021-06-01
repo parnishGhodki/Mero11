@@ -36,7 +36,7 @@ class _TabState extends State<TabScreen> with SingleTickerProviderStateMixin {
     getuserinfo().then((response) {
       setState(() {
         userinfo = response;
-        print(userinfo.data.userId);
+
         if (currentIndex == 0) {
           tabBody = HomeScreen(
             user: widget.user,
@@ -66,24 +66,54 @@ class _TabState extends State<TabScreen> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        key: _scaffoldKey,
-        endDrawer: Container(
-            width: MediaQuery.of(context).size.width * 0.75,
-            child: DrawerWidget(
-              myProfile: () {
-                setState(() {
-                  currentIndex = 2;
-                  tabBody = MyProfileScreen();
-                });
-              },
-              myReferrals: () => showModalBottomSheet<void>(
-                  context: context,
-                  builder: (BuildContext context) => myReferrals('200')),
-              userinfo: userinfo,
-            )),
-        bottomNavigationBar: bottomNavyBar(),
-        body: tabBody);
+    return DefaultTabController(
+        initialIndex: 0,
+        length: 2,
+        child: Scaffold(
+            key: _scaffoldKey,
+            appBar: AppBar(
+                backgroundColor: Colors.teal[400],
+                centerTitle: true,
+                elevation: 4,
+                title: Text("Mero11"),
+                toolbarHeight: 75,
+                bottom: PreferredSize(
+                    preferredSize: Size.fromHeight(5),
+                    child: TabBar(
+                      tabs: <Widget>[
+                        Tab(
+                          icon: Icon(Icons.sports_cricket),
+                        ),
+                        Tab(
+                          icon: Icon(Icons.sports_football),
+                        )
+                      ],
+                    ))),
+            drawer: Container(
+                width: MediaQuery.of(context).size.width * 0.75,
+                child: DrawerWidget(
+                  myProfile: () {
+                    setState(() {
+                      currentIndex = 2;
+                      tabBody = MyProfileScreen();
+                    });
+                  },
+                  myReferrals: () => showModalBottomSheet<void>(
+                      context: context,
+                      builder: (BuildContext context) => myReferrals('200')),
+                  userinfo: userinfo,
+                )),
+            bottomNavigationBar: bottomNavyBar(),
+            body: TabBarView(
+              children: <Widget>[
+                Container(
+                    padding: EdgeInsets.all(8),
+                    child: Text('', style: TextStyle(color: Colors.blue))),
+                Container(
+                    padding: EdgeInsets.all(8),
+                    child: Text('', style: TextStyle(color: Colors.blue)))
+              ],
+            ))); //tabBody);
   }
 
   myReferrals(String referral) {
@@ -182,12 +212,6 @@ class _TabState extends State<TabScreen> with SingleTickerProviderStateMixin {
         user: widget.user,
         userinfo: userinfo,
       );
-    } else if (currentIndex == 3) {
-      return MoreScreen(inviteFriendClick: () {
-        showModalBottomSheet<void>(
-            context: context,
-            builder: (BuildContext context) => myReferrals('200'));
-      });
     }
   }
 
@@ -202,22 +226,17 @@ class _TabState extends State<TabScreen> with SingleTickerProviderStateMixin {
           BottomNavyBarItem(
               icon: Icon(LineIcons.home, size: 25),
               title: Text(' Home'),
-              activeColor: Color.fromRGBO(161, 14, 41, 1),
+              activeColor: Colors.teal[400],
               inactiveColor: HexColor(colorBottomNavyBarInactive)),
           BottomNavyBarItem(
               icon: Icon(LineIcons.trophy, size: 25),
               title: Text(' Standings'),
-              activeColor: Color.fromRGBO(161, 14, 41, 1),
+              activeColor: Colors.teal[400],
               inactiveColor: HexColor(colorBottomNavyBarInactive)),
           BottomNavyBarItem(
               icon: Icon(LineIcons.user, size: 25),
               title: Text(' Me'),
-              activeColor: Color.fromRGBO(161, 14, 41, 1),
-              inactiveColor: HexColor(colorBottomNavyBarInactive)),
-          BottomNavyBarItem(
-              icon: Icon(LineIcons.cog, size: 25),
-              activeColor: Color.fromRGBO(161, 14, 41, 1),
-              title: Text(' More'),
+              activeColor: Colors.teal[400],
               inactiveColor: HexColor(colorBottomNavyBarInactive))
         ]);
   }

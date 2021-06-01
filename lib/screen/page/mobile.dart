@@ -14,7 +14,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 
 class MobileScreen extends StatefulWidget {
-  FacebookAuthService authService = FacebookAuthService();
+  //FacebookAuthService authService = FacebookAuthService();
   @override
   createState() => _MobileState();
 }

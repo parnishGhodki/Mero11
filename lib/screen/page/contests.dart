@@ -82,8 +82,55 @@ class _ContestsState extends State<ContestsScreen> {
         body: Column(children: <Widget>[
           Container(
               margin: EdgeInsets.all(10),
-              child: Expanded(
+              child: Container(
+                  padding: EdgeInsets.only(left: 16, right: 16, bottom: 16),
                   child: Row(children: <Widget>[
+                    Container(
+                        width: 50,
+                        height: 50,
+                        child: CircleAvatar(
+                            backgroundColor: Colors.grey.withOpacity(0.1),
+                            backgroundImage: ExactAssetImage(profileImage))),
+                    Expanded(
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                          Container(
+                              padding: EdgeInsets.all(8),
+                              child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    Expanded(
+                                        child: Container(
+                                            padding: EdgeInsets.only(left: 8),
+                                            child: Text(widget.match.team1,
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold)))),
+                                    Text('vs',
+                                        style: TextStyle(
+                                            fontSize: 18, color: Colors.red)),
+                                    Expanded(
+                                        child: Container(
+                                            padding: EdgeInsets.only(right: 8),
+                                            child: Text(widget.match.team2,
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                                textAlign: TextAlign.end)))
+                                  ])),
+                        ])),
+                    Container(
+                        width: 50,
+                        height: 50,
+                        child: CircleAvatar(
+                            backgroundColor: Colors.grey.withOpacity(0.1),
+                            backgroundImage: ExactAssetImage(profileImage)))
+                  ])) /*Container(
+                  child: Expanded(
+                      child: Row(children: <Widget>[
                 Container(
                     width: 40,
                     height: 60,
@@ -107,7 +154,8 @@ class _ContestsState extends State<ContestsScreen> {
                         backgroundColor: Colors.grey.withOpacity(0.1),
                         backgroundImage:
                             ExactAssetImage(profileImage /*logo2*/)))
-              ]))),
+              ])))*/
+              ),
           Divider(height: 1),
           Container(
               height: 30,

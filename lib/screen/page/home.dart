@@ -1,17 +1,13 @@
-import 'dart:ui';
 import 'package:cricketfantasy/model/schedule/cricket_schedule_response.dart';
 import 'package:cricketfantasy/model/userInfo.dart';
-import 'package:cricketfantasy/screen/page/my_profile.dart';
 import 'package:cricketfantasy/screen/widget/team_play.dart';
 import 'package:cricketfantasy/services/fixtures.dart';
 import 'package:cricketfantasy/util/vars.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
 import 'package:cricketfantasy/util/extensions.dart';
 import 'package:cricketfantasy/services/authenticate.dart';
-import 'package:provider/provider.dart';
 
 List<Data1> matchList = List<Data1>();
 
@@ -41,11 +37,11 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   Future<void> initState() {
     super.initState();
+
     if (widget.userinfo.data != null) {
       print("Executed");
       getMatchList().then((response) {
         setState(() {
-          print(matchList);
           matchList = response;
         });
       });
@@ -124,11 +120,11 @@ class _HomeScreenState extends State<HomeScreen>
                                       "assets/images/user_profile.png" /*temp*/,
                                   contestJoinShow: true /*temp*/,
                                   noOfContests: 0,
-                                  date: "",
+                                  date: "2021-05-09",
                                   time:
                                       "20:00:00" /*matchList.elementAt(index).dateTimeGMT*/,
                                 ),
-                            childCount: 0 /*matchList.length*/),
+                            childCount: 1 /*matchList.length*/),
                       )
               ]))),
     ]);

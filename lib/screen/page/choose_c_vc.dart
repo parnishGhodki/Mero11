@@ -41,6 +41,8 @@ class _ChooseCVCState extends State<ChooseCVCScreen> {
   void initState() {
     super.initState();
     allPalyersList.clear();
+    c = null;
+    vc = null;
 
     allPalyersList.addAll(batsmenList);
     allPalyersList.addAll(wicketKeeperList);
@@ -181,9 +183,11 @@ class _ChooseCVCState extends State<ChooseCVCScreen> {
                 }
               }
             } else {
-              c = null;
-              selected1[allPalyersList.indexOf(player)] =
-                  !selected1[playerList.indexOf(player)];
+              if (player == c) {
+                c = null;
+                selected1[allPalyersList.indexOf(player)] =
+                    !selected1[playerList.indexOf(player)];
+              }
             }
 
             if (!selected2[allPalyersList.indexOf(player)]) {
@@ -195,9 +199,11 @@ class _ChooseCVCState extends State<ChooseCVCScreen> {
                 }
               }
             } else {
-              vc = null;
-              selected2[allPalyersList.indexOf(player)] =
-                  !selected2[playerList.indexOf(player)];
+              if (player == vc) {
+                vc = null;
+                selected2[allPalyersList.indexOf(player)] =
+                    !selected2[playerList.indexOf(player)];
+              }
             }
 
             print(selected1[allPalyersList.indexOf(player)]);
